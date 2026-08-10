@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpringRoll"
+  short_description: "Operate the full SpringRoll control plane"
+  default_prompt: "Use $springroll to manage this application through SpringRoll MCP."
