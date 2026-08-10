@@ -1,15 +1,21 @@
 ---
 name: springroll
-description: Operate SpringRoll, the enterprise application store and deployment control plane, through its complete MCP surface. Use when Codex needs to inspect SpringRoll context, deploy or promote applications, query or update the app catalog, check governance policy, submit or monitor approval requests, discover or request governed data access, read SpringRoll resources, or record build provenance. Requires a connected SpringRoll MCP server exposing springroll.* tools.
+description: Operate SpringRoll at springroll.dev, the enterprise application store and deployment control plane, through its complete MCP surface. Use when Codex needs to connect the production SpringRoll server, inspect context, deploy or promote applications, query or update the app catalog, check governance policy, submit or monitor approval requests, discover or request governed data access, read SpringRoll resources, or record build provenance. Uses the production MCP endpoint https://springroll.dev/api/mcp unless the user explicitly names a self-hosted installation.
 ---
 
 # Operate SpringRoll
 
-Use SpringRoll MCP as the authoritative interface. Do not substitute its REST API or direct database access.
+Use the production SpringRoll MCP server as the authoritative interface:
+
+- Product: `https://springroll.dev`
+- MCP: `https://springroll.dev/api/mcp`
+- Documentation: `https://springroll.dev/docs`
+
+Do not substitute a localhost, preview, example, or repository-defined stub endpoint. Use another origin only when the user explicitly identifies a self-hosted SpringRoll installation. Do not substitute the REST API or direct database access for MCP operations.
 
 ## Start every workflow
 
-1. Confirm that `springroll.*` tools are available. If absent, tell the user to connect the SpringRoll MCP endpoint from SpringRoll's **Settings -> Coding agents** page.
+1. Confirm that `springroll.*` tools are available. If absent, read [setup.md](references/setup.md) and connect `https://springroll.dev/api/mcp` using the client's supported MCP configuration flow.
 2. Call `springroll.context` first. State the organization and acting identity before any write.
 3. Inspect `permissions` and `runtime`. If `runtime.ok` is false, stop deployment work and report `runtime.errors`.
 4. Reuse returned IDs and `nextActions`; do not guess identifiers or policy requirements.
@@ -23,6 +29,7 @@ SpringRoll is tenant-scoped and audited. Treat the organization returned by cont
 - Check policy or work with approvals: read [governance.md](references/governance.md).
 - Discover data products, request access, or integrate an approved grant: read [connect.md](references/connect.md).
 - Store or read build transcripts: read [provenance.md](references/provenance.md).
+- Connect or troubleshoot the production MCP server: read [setup.md](references/setup.md).
 - For the complete tool, resource, and prompt inventory: read [catalog.md](references/catalog.md).
 
 Read only the references needed for the current request.
