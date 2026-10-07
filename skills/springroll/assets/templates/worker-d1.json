@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "sdk": {
+    "filename": "springroll-chat-actions-0.1.0.tgz",
+    "sha256": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64"
+  },
+  "manifest": {
+    "apiVersion": "springboard.dev/v1alpha1",
+    "kind": "Application",
+    "metadata": {
+      "name": "chat-worker-d1"
+    },
+    "spec": {
+      "source": {
+        "type": "archive"
+      },
+      "build": {
+        "framework": "other",
+        "outputDirectory": "dist",
+        "buildCommand": "npm run build"
+      },
+      "owner": {
+        "supportContact": "owner@example.com"
+      },
+      "access": {
+        "visibility": "private"
+      },
+      "data": {
+        "classification": "internal"
+      },
+      "environments": [
+        {
+          "name": "development",
+          "class": "non-production"
+        },
+        {
+          "name": "uat",
+          "class": "non-production"
+        },
+        {
+          "name": "production",
+          "class": "production"
+        }
+      ],
+      "chatActions": {
+        "version": 1,
+        "collections": [
+          {
+            "id": "tasks",
+            "title": "Tasks",
+            "description": "Tasks owned by the connected member.",
+            "operations": [
+              "list",
+              "get",
+              "create",
+              "update"
+            ],
+            "audience": {
+              "roles": [
+                "APP_USER",
+                "APP_CREATOR",
+                "APP_OWNER",
+                "TENANT_ADMIN"
+              ]
+            },
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "done": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "title"
+              ],
+              "additionalProperties": false
+            },
+            "outputSchema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "done": {
+                  "type": "boolean"
+                },
+                "owner_membership_id": {
+                  "type": "string",
+                  "maxLength": 36
+                }
+              },
+              "required": [
+                "title",
+                "owner_membership_id"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "files": {
+    "package.json": "{\n  \"name\": \"springroll-worker-d1\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": {\n    \"node\": \"24.x\"\n  },\n  \"scripts\": {\n    \"build\": \"esbuild worker.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=dist/index.js\"\n  },\n  \"dependencies\": {\n    \"@springroll/chat-actions\": \"file:vendor/springroll-chat-actions-0.1.0.tgz\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.9.3\",\n    \"@types/node\": \"^24.13.3\",\n    \"esbuild\": \"0.25.12\"\n  }\n}\n",
+    "worker.ts": "import { CHAT_ACTIONS_PATH } from \"@springroll/chat-actions\";\nimport { createChatActionHandler } from \"@springroll/chat-actions\";\nimport { createD1ActionStore, D1_ACTION_SCHEMA, type ActionD1Database } from \"@springroll/chat-actions/d1\";\nimport { authorizeOwnTask, exampleTaskManifest } from \"@springroll/chat-actions/example\";\n\ninterface Env { DB: ActionD1Database; SPRINGROLL_DATA_URL: string; SPRINGROLL_DATA_TOKEN: string }\nconst worker = { async fetch(request: Request, env: Env): Promise<Response> {\n  if (new URL(request.url).pathname === \"/healthz\") return Response.json({ ok: true, workload: \"chat-worker-d1\" });\n  if (new URL(request.url).pathname !== CHAT_ACTIONS_PATH) return new Response(null, { status: 404 });\n  // Disposable acceptance fixture. Production apps install this with their migration workflow.\n  await env.DB.batch(D1_ACTION_SCHEMA.split(\";\").filter(sql => sql.trim()).map(sql => env.DB.prepare(sql)));\n  return createChatActionHandler({ controlPlaneUrl: new URL(env.SPRINGROLL_DATA_URL).origin,\n    applicationToken: env.SPRINGROLL_DATA_TOKEN, manifest: exampleTaskManifest, store: createD1ActionStore(env.DB),\n    authorize: authorizeOwnTask, createRecord: ({ principal, data }) => ({ ...data, owner_membership_id: principal.membershipId }),\n  })(request);\n} };\nexport default worker;\n",
+    ".gitignore": "node_modules/\ndist/\n.next/\n.env*\n",
+    ".dockerignore": "node_modules\ndist\n.next\n.git\n.env*\n"
+  }
+}

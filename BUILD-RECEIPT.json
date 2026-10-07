@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "sdk": {
+    "filename": "springroll-chat-actions-0.1.0.tgz",
+    "sha256": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64"
+  },
+  "files": {
+    ".codex-plugin/plugin.json": "a1409891265bc5fb101b975891e147ed3bf8227af0cbba51ceff8835215d9ef3",
+    ".mcp.json": "e036a2713ff3bddf52febcea94a182a5b7bdc5c3fe6c236c0a16df308e9ca671",
+    "REVIEWER.md": "b422b7fa0f66092089511e4964309c04962ba156d30b39f2fa6cbbcac8d31523",
+    "assets/icon.png": "033d47e5df865fac0d0478a283c8431846103c65ade098256b7c751e6c6b7333",
+    "assets/logo.png": "623662b22393666178c1ad6f70d3a73c83363d2f49aee1b9ad9830530636e6cf",
+    "skills/springroll/SKILL.md": "091f2b5567eaf32def9fc4b89e6541b204c7e2a9eac8789e882ea3e7ce0bc858",
+    "skills/springroll/assets/sdk/springroll-chat-actions-0.1.0.tgz": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64",
+    "skills/springroll/assets/templates/docker-postgres.json": "ad5f7239956595d81a0476019c183a9813c03566536e1c95e0f86f31d89764e7",
+    "skills/springroll/assets/templates/next-postgres.json": "bf19f9120ec3c54aa557299ba71a7e25c80bb8140e9ef7a90ee4857d449cf310",
+    "skills/springroll/assets/templates/node-postgres.json": "521867857728596114e62003192e9c4e15b26d6e93bba300a03dae426aaeb6c0",
+    "skills/springroll/assets/templates/node-redis.json": "2b5b8e484f56a1f023ddd1e47ef839e3134663a84421157529f115eb78dc655f",
+    "skills/springroll/assets/templates/worker-d1.json": "a737fccf5dcb97ebdd0808effa979a8bd402f6ec4b4c422ccdfecdd4337e0327",
+    "skills/springroll/references/app-records.md": "64819b1d1f9f4cb9d18adfc56e289599f01dfa684c5bdd34a07ac7976667af09",
+    "skills/springroll/scripts/create-app.mjs": "3ba174203e3dfaac309dfdb5bc8ff2d3142bae4ecabd2f35f1ee5c34485b7edb"
+  }
+}

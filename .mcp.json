@@ -2,7 +2,7 @@
   "mcpServers": {
     "springroll": {
       "type": "http",
-      "url": "https://springroll.dev/api/mcp"
+      "url": "https://springroll.dev/api/mcp/chatgpt"
     }
   }
 }

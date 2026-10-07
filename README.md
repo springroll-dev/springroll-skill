@@ -2,6 +2,10 @@
 
 Reusable skill for the complete SpringRoll MCP control plane.
 
+Includes the versioned app-record SDK and editable Next.js, Node,
+Docker, Redis and Cloudflare D1 templates. No SpringRoll source
+repository access is required. See the skill's app-record reference.
+
 ```bash
 npx skills add springroll-dev/springroll-skill --skill springroll
 ```

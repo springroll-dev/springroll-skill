@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "sdk": {
+    "filename": "springroll-chat-actions-0.1.0.tgz",
+    "sha256": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64"
+  },
+  "manifest": {
+    "apiVersion": "springboard.dev/v1alpha1",
+    "kind": "Application",
+    "metadata": {
+      "name": "chat-docker-postgres"
+    },
+    "spec": {
+      "source": {
+        "type": "archive"
+      },
+      "build": {
+        "framework": "other",
+        "buildCommand": "npm run build"
+      },
+      "owner": {
+        "supportContact": "owner@example.com"
+      },
+      "access": {
+        "visibility": "private"
+      },
+      "data": {
+        "classification": "internal"
+      },
+      "environments": [
+        {
+          "name": "development",
+          "class": "non-production"
+        },
+        {
+          "name": "uat",
+          "class": "non-production"
+        },
+        {
+          "name": "production",
+          "class": "production"
+        }
+      ],
+      "chatActions": {
+        "version": 1,
+        "collections": [
+          {
+            "id": "tasks",
+            "title": "Tasks",
+            "description": "Tasks owned by the connected member.",
+            "operations": [
+              "list",
+              "get",
+              "create",
+              "update"
+            ],
+            "audience": {
+              "roles": [
+                "APP_USER",
+                "APP_CREATOR",
+                "APP_OWNER",
+                "TENANT_ADMIN"
+              ]
+            },
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "done": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "title"
+              ],
+              "additionalProperties": false
+            },
+            "outputSchema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "done": {
+                  "type": "boolean"
+                },
+                "owner_membership_id": {
+                  "type": "string",
+                  "maxLength": 36
+                }
+              },
+              "required": [
+                "title",
+                "owner_membership_id"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "files": {
+    "package.json": "{\n  \"name\": \"springroll-docker-postgres\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": {\n    \"node\": \"24.x\"\n  },\n  \"scripts\": {\n    \"build\": \"esbuild server.ts --bundle --format=esm --platform=node --target=node24 --external:postgres --outfile=dist/server.mjs\",\n    \"start\": \"node dist/server.mjs\"\n  },\n  \"dependencies\": {\n    \"@springroll/chat-actions\": \"file:vendor/springroll-chat-actions-0.1.0.tgz\",\n    \"postgres\": \"^3.4.9\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.9.3\",\n    \"@types/node\": \"^24.13.3\",\n    \"esbuild\": \"0.25.12\"\n  }\n}\n",
+    "server.ts": "import { createServer } from \"node:http\";\nimport postgres from \"postgres\";\nimport { createChatActionHandler } from \"@springroll/chat-actions\";\nimport { createPostgresActionStore, POSTGRES_ACTION_SCHEMA, type ActionSqlClient } from \"@springroll/chat-actions/postgres\";\nimport { nodeChatActionListener } from \"@springroll/chat-actions/node\";\nimport { authorizeOwnTask, exampleTaskManifest } from \"@springroll/chat-actions/example\";\n\nconst database = postgres(process.env.DATABASE_URL!);\n// Disposable acceptance app. Production apps install the schema through their migrations.\nawait database.unsafe(POSTGRES_ACTION_SCHEMA);\nconst client = (sql: postgres.Sql | postgres.TransactionSql): ActionSqlClient => ({ async query<T extends Record<string, unknown>>(statement: string, values: readonly unknown[]) {\n  return { rows: await sql.unsafe<T[]>(statement, values as postgres.ParameterOrJSON<never>[]) };\n} });\nconst store = createPostgresActionStore({ ...client(database), transaction: async run => {\n  let result: unknown;\n  await database.begin(async transaction => { result = await run(client(transaction)); });\n  return result as never;\n} });\nconst handler = createChatActionHandler({\n  controlPlaneUrl: new URL(process.env.SPRINGROLL_DATA_URL!).origin,\n  applicationToken: process.env.SPRINGROLL_DATA_TOKEN!, manifest: exampleTaskManifest, store,\n  authorize: authorizeOwnTask,\n  createRecord: ({ principal, data }) => ({ ...data, owner_membership_id: principal.membershipId }),\n});\nconst actions = nodeChatActionListener(handler);\ncreateServer((request, response) => {\n  if (request.url === \"/healthz\") { response.writeHead(200, { \"Content-Type\": \"application/json\" }); response.end(JSON.stringify({ ok: true, workload: \"chat-node-postgres\" })); return; }\n  void actions(request, response);\n}).listen(Number(process.env.PORT ?? 8080), \"0.0.0.0\");\n",
+    ".gitignore": "node_modules/\ndist/\n.next/\n.env*\n",
+    ".dockerignore": "node_modules\ndist\n.next\n.git\n.env*\n",
+    "Dockerfile": "FROM node:24-alpine AS build\nWORKDIR /app\nCOPY package.json server.ts ./\nCOPY vendor ./vendor\nRUN npm install --ignore-scripts\nRUN npm run build\nRUN npm prune --omit=dev --ignore-scripts\nFROM node:24-alpine\nWORKDIR /app\nCOPY --from=build /app/dist ./dist\nCOPY --from=build /app/node_modules ./node_modules\nCOPY --from=build /app/package.json ./\nUSER node\nEXPOSE 8080\nCMD [\"node\",\"dist/server.mjs\"]\n"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "sdk": {
+    "filename": "springroll-chat-actions-0.1.0.tgz",
+    "sha256": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64"
+  },
+  "manifest": {
+    "apiVersion": "springboard.dev/v1alpha1",
+    "kind": "Application",
+    "metadata": {
+      "name": "chat-node-redis"
+    },
+    "spec": {
+      "source": {
+        "type": "archive"
+      },
+      "build": {
+        "framework": "other",
+        "buildCommand": "npm run build"
+      },
+      "owner": {
+        "supportContact": "owner@example.com"
+      },
+      "access": {
+        "visibility": "private"
+      },
+      "data": {
+        "classification": "internal"
+      },
+      "environments": [
+        {
+          "name": "development",
+          "class": "non-production"
+        },
+        {
+          "name": "uat",
+          "class": "non-production"
+        },
+        {
+          "name": "production",
+          "class": "production"
+        }
+      ],
+      "chatActions": {
+        "version": 1,
+        "collections": [
+          {
+            "id": "tasks",
+            "title": "Tasks",
+            "description": "Tasks owned by the connected member.",
+            "operations": [
+              "list",
+              "get",
+              "create",
+              "update"
+            ],
+            "audience": {
+              "roles": [
+                "APP_USER",
+                "APP_CREATOR",
+                "APP_OWNER",
+                "TENANT_ADMIN"
+              ]
+            },
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "done": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "title"
+              ],
+              "additionalProperties": false
+            },
+            "outputSchema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "done": {
+                  "type": "boolean"
+                },
+                "owner_membership_id": {
+                  "type": "string",
+                  "maxLength": 36
+                }
+              },
+              "required": [
+                "title",
+                "owner_membership_id"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "files": {
+    "package.json": "{\n  \"name\": \"springroll-node-redis\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"engines\": {\n    \"node\": \"24.x\"\n  },\n  \"scripts\": {\n    \"build\": \"esbuild server.ts --bundle --format=esm --platform=node --target=node24 --external:postgres --outfile=dist/server.mjs\",\n    \"start\": \"node dist/server.mjs\"\n  },\n  \"dependencies\": {\n    \"@springroll/chat-actions\": \"file:vendor/springroll-chat-actions-0.1.0.tgz\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.9.3\",\n    \"@types/node\": \"^24.13.3\",\n    \"esbuild\": \"0.25.12\"\n  }\n}\n",
+    "server.ts": "import { createServer } from \"node:http\";\nimport { createChatActionHandler } from \"@springroll/chat-actions\";\nimport { createRedisActionStore, createUpstashActionClient } from \"@springroll/chat-actions/redis\";\nimport { nodeChatActionListener } from \"@springroll/chat-actions/node\";\nimport { authorizeOwnTask, exampleTaskManifest } from \"@springroll/chat-actions/example\";\n\nconst handler = createChatActionHandler({ controlPlaneUrl: new URL(process.env.SPRINGROLL_DATA_URL!).origin,\n  applicationToken: process.env.SPRINGROLL_DATA_TOKEN!, manifest: exampleTaskManifest,\n  store: createRedisActionStore(createUpstashActionClient(process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL!, process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN!)),\n  authorize: authorizeOwnTask, createRecord: ({ principal, data }) => ({ ...data, owner_membership_id: principal.membershipId }),\n});\nconst actions = nodeChatActionListener(handler);\ncreateServer((request, response) => {\n  if (request.url === \"/healthz\") { response.writeHead(200, { \"Content-Type\": \"application/json\" }); response.end(JSON.stringify({ ok: true, workload: \"chat-node-redis\" })); return; }\n  void actions(request, response);\n}).listen(Number(process.env.PORT ?? 8080), \"0.0.0.0\");\n",
+    ".gitignore": "node_modules/\ndist/\n.next/\n.env*\n",
+    ".dockerignore": "node_modules\ndist\n.next\n.git\n.env*\n"
+  }
+}

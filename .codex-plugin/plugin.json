@@ -1,7 +1,7 @@
 {
   "name": "springroll",
-  "version": "0.1.0",
-  "description": "Deploy and govern AI-built internal applications with SpringRoll.",
+  "version": "1.0.0",
+  "description": "Build, deploy and operate SpringRoll apps, Notion items and Salesforce Tasks with confirmed changes.",
   "author": {
     "name": "SpringRoll",
     "email": "springroll@m-intelligence.tech",
@@ -18,8 +18,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "SpringRoll",
-    "shortDescription": "Ship AI-built internal apps with a governed record.",
-    "longDescription": "Connect SpringRoll over MCP, register an application, deploy a pinned release, follow runtime state, and keep ownership, policy, approvals, and audit history with the application.",
+    "shortDescription": "Build, deploy and operate your apps from ChatGPT.",
+    "longDescription": "Connect your SpringRoll organization to deploy supported Vercel and Cloudflare workloads, inspect application-bound Postgres, Redis and storage, operate approved app records, and read or prepare changes to Notion items and Salesforce Tasks. Confirm every change in SpringRoll.",
     "developerName": "SpringRoll",
     "category": "Developer Tools",
     "capabilities": [
