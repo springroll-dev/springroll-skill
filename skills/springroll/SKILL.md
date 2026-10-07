@@ -52,7 +52,7 @@ loudly instead of drifting.
 ## When not to use this
 
 - No SpringRoll MCP server is connected: the `springroll.*` tools are absent.
-  Say so and point at Settings → Coding agents in SpringRoll for the connect
+  Say so and point at Agent connections (account menu) in SpringRoll for the connect
   command. Do not try to work around it with the REST API.
 - The project is not a deployable web app (a library, a CLI, a notebook). SpringRoll
   deploys web applications; say so rather than registering something that can never
