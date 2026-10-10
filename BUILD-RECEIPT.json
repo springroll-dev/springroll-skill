@@ -2,21 +2,21 @@
   "version": 1,
   "sdk": {
     "filename": "springroll-chat-actions-0.1.0.tgz",
-    "sha256": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64"
+    "sha256": "acc6a872088dae79d754e8eb25cf3dd4b3e5069dd55deaab76146fae55d02fc4"
   },
   "files": {
     ".codex-plugin/plugin.json": "a1409891265bc5fb101b975891e147ed3bf8227af0cbba51ceff8835215d9ef3",
     ".mcp.json": "e036a2713ff3bddf52febcea94a182a5b7bdc5c3fe6c236c0a16df308e9ca671",
-    "REVIEWER.md": "b422b7fa0f66092089511e4964309c04962ba156d30b39f2fa6cbbcac8d31523",
+    "REVIEWER.md": "cad32491f00ae69271ab8833427df5ed6dcd305ee78f3d1f0424fd5d0ddc311b",
     "assets/icon.png": "033d47e5df865fac0d0478a283c8431846103c65ade098256b7c751e6c6b7333",
     "assets/logo.png": "623662b22393666178c1ad6f70d3a73c83363d2f49aee1b9ad9830530636e6cf",
     "skills/springroll/SKILL.md": "091f2b5567eaf32def9fc4b89e6541b204c7e2a9eac8789e882ea3e7ce0bc858",
-    "skills/springroll/assets/sdk/springroll-chat-actions-0.1.0.tgz": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64",
-    "skills/springroll/assets/templates/docker-postgres.json": "ad5f7239956595d81a0476019c183a9813c03566536e1c95e0f86f31d89764e7",
-    "skills/springroll/assets/templates/next-postgres.json": "bf19f9120ec3c54aa557299ba71a7e25c80bb8140e9ef7a90ee4857d449cf310",
-    "skills/springroll/assets/templates/node-postgres.json": "521867857728596114e62003192e9c4e15b26d6e93bba300a03dae426aaeb6c0",
-    "skills/springroll/assets/templates/node-redis.json": "2b5b8e484f56a1f023ddd1e47ef839e3134663a84421157529f115eb78dc655f",
-    "skills/springroll/assets/templates/worker-d1.json": "a737fccf5dcb97ebdd0808effa979a8bd402f6ec4b4c422ccdfecdd4337e0327",
+    "skills/springroll/assets/sdk/springroll-chat-actions-0.1.0.tgz": "acc6a872088dae79d754e8eb25cf3dd4b3e5069dd55deaab76146fae55d02fc4",
+    "skills/springroll/assets/templates/docker-postgres.json": "44c326fe9273f57d0de4a5efcf6d2e5b4fb93f848e194a7bde81d20565a713db",
+    "skills/springroll/assets/templates/next-postgres.json": "2205f04091c400aa5ff1b2340b989266f97fe904945b3a12fbb859b0a1180422",
+    "skills/springroll/assets/templates/node-postgres.json": "16d4bcc2f4c1de0a3733faf1f9498354dc91f891ce6c14745ede5806babf8824",
+    "skills/springroll/assets/templates/node-redis.json": "339753188ae319af92f77f29835c942c0f084fe3f36ec0bf5bb110c0046ea6b0",
+    "skills/springroll/assets/templates/worker-d1.json": "187364584c8b4bf8bfe2bcd14d58c89cb00f3912d15547cff8ad758730e4d08a",
     "skills/springroll/references/app-records.md": "64819b1d1f9f4cb9d18adfc56e289599f01dfa684c5bdd34a07ac7976667af09",
     "skills/springroll/scripts/create-app.mjs": "3ba174203e3dfaac309dfdb5bc8ff2d3142bae4ecabd2f35f1ee5c34485b7edb"
   }

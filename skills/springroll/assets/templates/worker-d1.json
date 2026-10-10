@@ -2,7 +2,7 @@
   "version": 1,
   "sdk": {
     "filename": "springroll-chat-actions-0.1.0.tgz",
-    "sha256": "275df9e47e1b2af8c15a26c22838b0996345df4e4709e9128ea9f14fb6e6ab64"
+    "sha256": "acc6a872088dae79d754e8eb25cf3dd4b3e5069dd55deaab76146fae55d02fc4"
   },
   "manifest": {
     "apiVersion": "springboard.dev/v1alpha1",
