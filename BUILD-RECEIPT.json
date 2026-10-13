@@ -7,10 +7,10 @@
   "files": {
     ".codex-plugin/plugin.json": "c86e39920f2625f2baac688c4a1b3c226d19813c9bc8e36b58cdad66ddd1fa0d",
     ".mcp.json": "e036a2713ff3bddf52febcea94a182a5b7bdc5c3fe6c236c0a16df308e9ca671",
-    "REVIEWER.md": "cad32491f00ae69271ab8833427df5ed6dcd305ee78f3d1f0424fd5d0ddc311b",
+    "REVIEWER.md": "57dcfe4d2b89eabe0fad79d2a778c8029185d4ef3b3abd67dccdd0f61d516364",
     "assets/icon.png": "033d47e5df865fac0d0478a283c8431846103c65ade098256b7c751e6c6b7333",
     "assets/logo.png": "623662b22393666178c1ad6f70d3a73c83363d2f49aee1b9ad9830530636e6cf",
-    "skills/springroll/SKILL.md": "091f2b5567eaf32def9fc4b89e6541b204c7e2a9eac8789e882ea3e7ce0bc858",
+    "skills/springroll/SKILL.md": "59f42c6d360d91c2117745d0ec792fa71896a63b27d0fc15e56c9ff6c0dd570e",
     "skills/springroll/assets/sdk/springroll-chat-actions-0.1.0.tgz": "acc6a872088dae79d754e8eb25cf3dd4b3e5069dd55deaab76146fae55d02fc4",
     "skills/springroll/assets/templates/docker-postgres.json": "44c326fe9273f57d0de4a5efcf6d2e5b4fb93f848e194a7bde81d20565a713db",
     "skills/springroll/assets/templates/next-postgres.json": "2205f04091c400aa5ff1b2340b989266f97fe904945b3a12fbb859b0a1180422",
