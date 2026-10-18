@@ -18,7 +18,7 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "SpringRoll",
-    "shortDescription": "Build, deploy and operate your apps from ChatGPT.",
+    "shortDescription": "Deploy and manage your apps",
     "longDescription": "Connect your SpringRoll organization to deploy supported Vercel and Cloudflare workloads, inspect application-bound Postgres, Redis and storage, operate approved app records, and read or prepare changes to Notion items and Salesforce Tasks. Confirm every change in SpringRoll.",
     "developerName": "SpringRoll",
     "category": "Developer Tools",
@@ -27,6 +27,7 @@
       "Write"
     ],
     "websiteURL": "https://springroll.dev",
+    "supportURL": "https://springroll.dev/contact",
     "privacyPolicyURL": "https://springroll.dev/privacy",
     "termsOfServiceURL": "https://springroll.dev/terms",
     "defaultPrompt": [
